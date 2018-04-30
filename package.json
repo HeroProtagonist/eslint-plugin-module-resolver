@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-module-resolver",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Warn when using relative paths to modules aliased",
   "keywords": [
     "eslint",
@@ -12,8 +12,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "check-packages": "nsp check",
-    "postinstall": "yarn check-packages"
+    "check-packages": "nsp check"
   },
   "dependencies": {
     "find-babel-config": "^1.1.0"
