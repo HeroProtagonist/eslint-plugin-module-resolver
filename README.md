@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/HeroProtagonist/eslint-plugin-module-resolver.svg?branch=master)](https://travis-ci.org/HeroProtagonist/eslint-plugin-module-resolver)
+
 # eslint-plugin-module-resolver
 
-Warn when using relative paths to modules aliased
+Warn when using relative paths to modules aliased using [babel-plugin-module-resolver](https://github.com/tleunen/babel-plugin-module-resolver)
 
 ## Installation
 
