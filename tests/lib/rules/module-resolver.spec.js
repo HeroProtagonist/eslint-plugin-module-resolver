@@ -5,7 +5,7 @@
 const rule = require("../../../lib/rules/module-resolver")
 const { RuleTester } = require("eslint")
 
-
+// process.chdir(__dirname)
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ ruleTester.run("module-resolver", rule, {
 
     valid: [
 
-        // give me some code that won't trigger a warning
+      "require('../wat')"
     ],
 
     invalid: [
