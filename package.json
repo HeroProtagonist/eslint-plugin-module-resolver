@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-module-resolver",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Warn when using relative paths to modules aliased",
   "keywords": [
     "eslint",

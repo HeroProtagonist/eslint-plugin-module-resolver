@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/eslint-plugin-module-resolver.svg)](https://badge.fury.io/js/eslint-plugin-module-resolver)
 [![Build Status](https://travis-ci.org/HeroProtagonist/eslint-plugin-module-resolver.svg?branch=master)](https://travis-ci.org/HeroProtagonist/eslint-plugin-module-resolver)
 
 # eslint-plugin-module-resolver
