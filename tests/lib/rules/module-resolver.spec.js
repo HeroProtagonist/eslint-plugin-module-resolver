@@ -4,6 +4,16 @@ const { RuleTester } = require('eslint')
 // Change working directory so closest .babelrc is the one in tests/
 process.chdir(__dirname)
 
+const createInvalid = (code, type) => ({
+  code,
+  errors: [
+    {
+      message: 'Do not use relative path for aliased modules',
+      type,
+    },
+  ],
+})
+
 const ruleTester = new RuleTester({ parser: 'babel-eslint' })
 ruleTester.run('module-resolver', rule, {
   valid: [
@@ -20,14 +30,15 @@ ruleTester.run('module-resolver', rule, {
   ],
 
   invalid: [
-    {
-      code: '',
-      errors: [
-        {
-          message: 'Fill me in.',
-          type: 'Me too',
-        },
-      ],
-    },
+    createInvalid("require('../actions/api')", "CallExpression"),
+    createInvalid("require('../reducers/api')", "CallExpression"),
+    createInvalid("const { api } = require('./actions/api')", "CallExpression"),
+    createInvalid("const { api } = require('./reducers/api')", "CallExpression"),
+    createInvalid("import('../../actions/api')", "CallExpression"),
+    createInvalid("import('../../reducers/api')", "CallExpression"),
+    createInvalid("import { api } from './reducers/api'", "ImportDeclaration"),
+    createInvalid("import { api } from './reducers/api'", "ImportDeclaration"),
+    createInvalid("const { api } = dynamic(import('../actions/api'))", "CallExpression"),
+    createInvalid("const { api } = dynamic(import('../reducers/api'))", "CallExpression"),
   ],
 })
