@@ -1,4 +1,5 @@
-const rule = require('../../../lib/rules/module-resolver')
+const findBabelConfig = require('find-babel-config')
+const rule = require('../../../lib/rules/use-alias')
 const { RuleTester } = require('eslint')
 
 // Change working directory so closest .babelrc is the one in tests/
