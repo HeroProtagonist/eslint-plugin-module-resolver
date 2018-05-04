@@ -25,11 +25,14 @@
     "@babel/cli": "^7.0.0-beta.46",
     "@babel/core": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
+    "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.3",
+    "babel-jest": "^22.4.3",
     "eslint": "^4.9.0",
-    "jest": "^22.4.3",
+    "jest": "^21.3.0-beta.15",
     "nsp": "^3.2.1",
-    "prettier": "^1.12.1"
+    "prettier": "^1.12.1",
+    "regenerator-runtime": "^0.11.1"
   },
   "engines": {
     "node": ">=8.9.4"
