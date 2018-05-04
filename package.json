@@ -16,7 +16,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "check-packages": "nsp check"
+    "check-packages": "nsp check",
+    "bump": "yarn test && yarn version && babel lib --out-dir dist && npm publish"
   },
   "dependencies": {
     "find-babel-config": "^1.1.0"
