@@ -8,8 +8,11 @@
     "eslintplugin",
     "eslint-plugin"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "Jordan",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
