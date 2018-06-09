@@ -24,10 +24,12 @@ ruleTester.run('module-resolver', rule, {
     "const { api } = require('reducers/api')",
     "import('actions/api')",
     "import('reducers/api')",
+    "import(`${buildPath}/dist`)",
     "import { api } from 'reducers/api'",
     "import { api } from 'reducers/api'",
     "const { api } = dynamic(import('actions/api'))",
     "const { api } = dynamic(import('reducers/api'))",
+    "const { server } = require(`${buildPath}/dist`)",
   ],
 
   invalid: [
