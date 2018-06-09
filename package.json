@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-module-resolver",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Warn when using relative paths to modules aliased",
   "repository": "HeroProtagonist/eslint-plugin-module-resolver",
   "keywords": [
