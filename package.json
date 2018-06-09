@@ -17,6 +17,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "check-packages": "nsp check",
+    "clean": "rimraf *.tgz dist",
     "bump": "yarn test && yarn version && babel lib --out-dir dist && npm publish"
   },
   "dependencies": {
@@ -33,7 +34,8 @@
     "jest": "^21.3.0-beta.15",
     "nsp": "^3.2.1",
     "prettier": "^1.12.1",
-    "regenerator-runtime": "^0.11.1"
+    "regenerator-runtime": "^0.11.1",
+    "rimraf": "^2.6.2"
   },
   "engines": {
     "node": ">=8.9.4"
