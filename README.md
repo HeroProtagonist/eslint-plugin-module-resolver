@@ -10,16 +10,14 @@ Warn when using relative paths to modules aliased using [babel-plugin-module-res
 You'll first need to install [ESLint](http://eslint.org):
 
 ```
-$ npm i eslint --save-dev
+$ yarn add --dev eslint
 ```
 
 Next, install `eslint-plugin-module-resolver`:
 
 ```
-$ npm install eslint-plugin-module-resolver --save-dev
+$ yarn add --dev eslint-plugin-module-resolver
 ```
-
-**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-module-resolver` globally.
 
 ## Usage
 
@@ -33,22 +31,16 @@ Add `module-resolver` to the plugins section of your `.eslintrc` configuration f
 }
 ```
 
-
 Then configure the rules you want to use under the rules section.
 
 ```json
 {
     "rules": {
-        "module-resolver/rule-name": 2
+        "module-resolver/use-alias": 2
     }
 }
 ```
 
 ## Supported Rules
 
-* Fill in provided rules here
-
-
-
-
-
+* **use-alias** - Warn when aliased paths are using relative paths
