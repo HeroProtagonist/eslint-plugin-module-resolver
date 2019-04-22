@@ -3,4 +3,7 @@ node_js:
   - "stable"
 script:
     - yarn test
-    - yarn audit
+    # - yarn audit
+branches:
+  only:
+    - master
