@@ -20,23 +20,24 @@
     "bump": "yarn test && yarn version && babel lib --out-dir dist && npm publish"
   },
   "dependencies": {
-    "find-babel-config": "^1.1.0"
+    "find-babel-config": "^1.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.46",
-    "@babel/core": "^7.0.0-beta.46",
-    "@babel/preset-env": "^7.0.0-beta.46",
-    "babel-core": "^7.0.0-0",
-    "babel-eslint": "^8.2.3",
-    "babel-jest": "^22.4.3",
-    "eslint": "^4.9.0",
-    "jest": "^21.3.0-beta.15",
-    "prettier": "^1.12.1",
-    "regenerator-runtime": "^0.11.1",
-    "rimraf": "^2.6.2"
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.7.1",
+    "eslint": "^5.16.0",
+    "jest": "^24.7.1",
+    "nsp": "^3.2.1",
+    "prettier": "^1.17.0",
+    "regenerator-runtime": "^0.13.2",
+    "rimraf": "^2.6.3"
   },
   "engines": {
-    "node": ">=8.9.4"
+    "node": ">=10.0.0"
   },
   "license": "MIT"
 }
