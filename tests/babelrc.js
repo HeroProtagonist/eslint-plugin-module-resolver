@@ -6,8 +6,9 @@ module.exports = {
       {
         root: ['.'],
         alias: {
-          action: '../actions',
-          reducer: '../../reducers',
+          action: './actions',
+          reducer: './reducers',
+          ClientMain: './src/client/main'
         },
       },
     ],
