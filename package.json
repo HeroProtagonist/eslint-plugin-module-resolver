@@ -16,8 +16,10 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
+    "build": "babel lib --out-dir dist",
+    "build:watch": "yarn build --watch",
     "clean": "rimraf *.tgz dist",
-    "bump": "yarn test && yarn version && babel lib --out-dir dist && npm publish"
+    "bump": "yarn test && yarn version && yarn build && npm publish"
   },
   "dependencies": {
     "find-babel-config": "^1.2.0"
