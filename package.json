@@ -16,6 +16,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
+    "build:watch": "babel lib --out-dir dist --watch",
     "clean": "rimraf *.tgz dist",
     "bump": "yarn test && yarn version && babel lib --out-dir dist && npm publish"
   },
