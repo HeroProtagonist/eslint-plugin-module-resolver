@@ -12,7 +12,7 @@ describe('checkIgnoreDepth', () => {
 
   it('returns false when invalid arguments are passed', () => {
     const invalid1 = checkIgnoreDepth({
-      ignoreDepth: '../',
+      ignorePrefix: '../',
     })
 
     const invalid2 = checkIgnoreDepth({
@@ -31,17 +31,17 @@ describe('checkIgnoreDepth', () => {
 
   it('returns true if the path is at ignoreDepth', () => {
     const result1 = checkIgnoreDepth({
-      ignoreDepth: '../',
+      ignorePrefix: '../',
       path: '../routes/index.js'
     })
 
     const result2 = checkIgnoreDepth({
-      ignoreDepth: '../../',
+      ignorePrefix: '../../',
       path: '../../routes/index.js'
     })
 
     const result3 = checkIgnoreDepth({
-      ignoreDepth: '../../../',
+      ignorePrefix: '../../../',
       path: '../../../routes/index.js'
     })
 
@@ -52,17 +52,17 @@ describe('checkIgnoreDepth', () => {
 
   it('returns false if the path is not at ignoreDepth', () => {
     const result1 = checkIgnoreDepth({
-      ignoreDepth: '../',
+      ignorePrefix: '../',
       path: '../../routes/index.js'
     })
 
     const result2 = checkIgnoreDepth({
-      ignoreDepth: '../../',
+      ignorePrefix: '../../',
       path: '../../../routes/index.js'
     })
 
     const result3 = checkIgnoreDepth({
-      ignoreDepth: '../../../',
+      ignorePrefix: '../../../',
       path: '../routes/index.js'
     })
 
