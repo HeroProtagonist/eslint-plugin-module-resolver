@@ -38,8 +38,5 @@
     "regenerator-runtime": "^0.13.2",
     "rimraf": "^2.6.3"
   },
-  "engines": {
-    "node": ">=10.0.0"
-  },
   "license": "MIT"
 }
