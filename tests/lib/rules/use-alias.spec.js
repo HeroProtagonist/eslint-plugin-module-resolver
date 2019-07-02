@@ -3,22 +3,47 @@ const { RuleTester } = require('eslint')
 
 const fs = require('fs')
 
-jest.spyOn(fs, 'existsSync').mockImplementation(() => true)
-jest.spyOn(process, 'cwd').mockImplementation(() => '/project')
+let existsSyncSpy
+let cwdSpy
 
-// Change working directory so closest .babelrc is the one in tests/
-process.chdir(__dirname)
-
-const createInvalid = (code, type, filename = '/project/src/account.js') => ({
-  code,
-  filename,
-  errors: [
-    {
-      message: 'Do not use relative path for aliased modules',
-      type,
-    },
-  ],
+beforeEach(() => {
+  existsSyncSpy = jest.spyOn(fs, 'existsSync').mockImplementation(() => true)
+  cwdSpy = jest.spyOn(process, 'cwd').mockImplementation(() => '/project')
 })
+
+afterEach(() => {
+  existsSyncSpy.mockRestore()
+  cwdSpy.mockRestore()
+})
+
+const createInvalid = (...args) => {
+  let code
+  let type
+  let filename
+  let options = []
+  let defaultFilename = '/project/src/account.js'
+
+  if (args.length === 1) {
+    const [ obj ] = args
+    ;({ code, type, filename, options } = obj)
+  } else {
+    [ code, type, filename ] = args
+  }
+
+  filename = filename || defaultFilename
+
+  return {
+    code,
+    filename,
+    options,
+    errors: [
+      {
+        message: 'Do not use relative path for aliased modules',
+        type,
+      },
+    ],
+  }
+}
 
 const ruleTester = new RuleTester({ parser: 'babel-eslint' })
 ruleTester.run('module-resolver', rule, {
@@ -41,6 +66,17 @@ ruleTester.run('module-resolver', rule, {
     "import { api } from './reducers/api'",
     "import { api } from './reducers/api'",
     "const { api } = dynamic(import('./src/client/main'))",
+    createInvalid({
+      code: "const { api } = dynamic(import('../reducers/api'))",
+      type: "CallExpression",
+      options: [{ ignoreDepth: 1 }],
+    }),
+    createInvalid({
+      code: "import ClientMain from '../../../client/main/components/App'",
+      type: "ImportDeclaration",
+      filename: "/project/src/client/main/utils/index.js",
+      options: [{ ignoreDepth: 3 }],
+    }),
   ],
 
   invalid: [
@@ -51,5 +87,16 @@ ruleTester.run('module-resolver', rule, {
     createInvalid("const { api } = dynamic(import('../actions/api'))", "CallExpression"),
     createInvalid("import ClientMain from '../../../client/main/components/App'", "ImportDeclaration", "/project/src/client/main/utils/index.js"),
     createInvalid("const { api } = dynamic(import('../reducers/api'))", "CallExpression"),
+    createInvalid({
+      code: "const { api } = dynamic(import('../reducers/api'))",
+      type: "CallExpression",
+      options: [{ ignoreDepth: 2 }],
+    }),
+    createInvalid({
+      code: "import ClientMain from '../../../client/main/components/App'",
+      type: "ImportDeclaration",
+      filename: "/project/src/client/main/utils/index.js",
+      options: [{ ignoreDepth: 1 }],
+    }),
   ],
 })
