@@ -43,4 +43,4 @@ Then configure the rules you want to use under the rules section.
 
 ## Supported Rules
 
-* **use-alias** - Warn when aliased paths are using relative paths
+* [module-resolver/use-alias](docs/rules/use-alias.md) - Warn when aliased paths are using relative paths
