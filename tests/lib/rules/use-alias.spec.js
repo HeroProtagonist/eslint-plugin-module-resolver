@@ -3,11 +3,18 @@ const { RuleTester } = require('eslint')
 
 const fs = require('fs')
 
-jest.spyOn(fs, 'existsSync').mockImplementation(() => true)
-jest.spyOn(process, 'cwd').mockImplementation(() => '/project')
+let existsSyncSpy
+let cwdSpy
 
-// Change working directory so closest .babelrc is the one in tests/
-process.chdir(__dirname)
+beforeEach(() => {
+  existsSyncSpy = jest.spyOn(fs, 'existsSync').mockImplementation(() => true)
+  cwdSpy = jest.spyOn(process, 'cwd').mockImplementation(() => '/project')
+})
+
+afterEach(() => {
+  existsSyncSpy.mockRestore()
+  cwdSpy.mockRestore()
+})
 
 const createInvalid = (...args) => {
   let code
