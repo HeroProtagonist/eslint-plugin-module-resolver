@@ -44,3 +44,7 @@ Then configure the rules you want to use under the rules section.
 ## Supported Rules
 
 * [module-resolver/use-alias](docs/rules/use-alias.md) - Warn when aliased paths are using relative paths
+
+# License
+
+ESLint-plugin-module-resolver is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
