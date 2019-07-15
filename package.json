@@ -25,15 +25,14 @@
     "find-babel-config": "^1.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
     "babel-core": "^6.26.3",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
-    "nsp": "^3.2.1",
-    "prettier": "^1.17.0",
+    "prettier": "^1.18.2",
     "regenerator-runtime": "^0.13.2",
     "rimraf": "^2.6.3"
   },
