@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "stable"
 script:
-  - npm audit
+  - yarn audit
   - COLLECT_COVERAGE=true yarn test
   - codecov
 branches:
