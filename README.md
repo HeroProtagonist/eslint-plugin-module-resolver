@@ -1,7 +1,9 @@
 # eslint-plugin-module-resolver
 
 [![npm version](https://badge.fury.io/js/eslint-plugin-module-resolver.svg)](https://badge.fury.io/js/eslint-plugin-module-resolver)
+[![npm downloads](https://img.shields.io/npm/dm/eslint-plugin-module-resolver.svg)](https://www.npmjs.com/package/eslint-plugin-module-resolver)
 [![Build Status](https://travis-ci.com/HeroProtagonist/eslint-plugin-module-resolver.svg?branch=master)](https://travis-ci.com/HeroProtagonist/eslint-plugin-module-resolver)
+[![codecov](https://codecov.io/gh/HeroProtagonist/eslint-plugin-module-resolver/branch/master/graph/badge.svg)](https://codecov.io/gh/HeroProtagonist/eslint-plugin-module-resolver)
 
 Warn when using relative paths to modules aliased using [babel-plugin-module-resolver](https://github.com/tleunen/babel-plugin-module-resolver)
 
@@ -9,14 +11,14 @@ Warn when using relative paths to modules aliased using [babel-plugin-module-res
 
 You'll first need to install [ESLint](http://eslint.org):
 
-```
-$ yarn add --dev eslint
+```bash
+yarn add --dev eslint
 ```
 
 Next, install `eslint-plugin-module-resolver`:
 
-```
-$ yarn add --dev eslint-plugin-module-resolver
+```bash
+yarn add --dev eslint-plugin-module-resolver
 ```
 
 ## Usage
