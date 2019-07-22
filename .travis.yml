@@ -3,7 +3,7 @@ node_js:
   - "stable"
 script:
   - yarn audit
-  - COLLECT_COVERAGE=true yarn test
+  - yarn test:coverage
   - codecov
 branches:
   only:
