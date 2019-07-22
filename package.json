@@ -16,10 +16,12 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "COLLECT_COVERAGE=true jest",
+    "prebuild": "yarn clean",
     "build": "babel lib --out-dir dist",
     "build:watch": "yarn build --watch",
     "clean": "rimraf *.tgz dist",
-    "bump": "yarn test && yarn version && yarn clean && yarn build && npm publish"
+    "bump": "yarn test && yarn version && yarn build && npm publish"
   },
   "dependencies": {
     "find-babel-config": "^1.2.0"
@@ -30,6 +32,7 @@
     "@babel/preset-env": "^7.5.4",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.2",
+    "codecov": "^3.5.0",
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
     "prettier": "^1.18.2",

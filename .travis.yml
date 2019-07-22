@@ -2,8 +2,9 @@ language: node_js
 node_js:
   - "stable"
 script:
-    - yarn test
-    # - yarn audit
+  - yarn audit
+  - yarn test:coverage
+  - codecov
 branches:
   only:
     - master
