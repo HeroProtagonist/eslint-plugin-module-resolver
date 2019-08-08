@@ -2,18 +2,19 @@ const rule = require('../../../lib/rules/use-alias')
 const { RuleTester } = require('eslint')
 
 const fs = require('fs')
+const path = require('path')
 
 let existsSyncSpy
-let cwdSpy
+// let cwdSpy
 
 beforeEach(() => {
   existsSyncSpy = jest.spyOn(fs, 'existsSync').mockImplementation(() => true)
-  cwdSpy = jest.spyOn(process, 'cwd').mockImplementation(() => '/project')
+  // cwdSpy = jest.spyOn(process, 'cwd').mockImplementation(() => '/project')
 })
 
 afterEach(() => {
   existsSyncSpy.mockRestore()
-  cwdSpy.mockRestore()
+  // cwdSpy.mockRestore()
 })
 
 const createInvalid = (...args) => {
@@ -21,7 +22,8 @@ const createInvalid = (...args) => {
   let type
   let filename
   let options = []
-  let defaultFilename = '/project/src/account.js'
+  // let defaultFilename = '/project/src/account.js'
+  let defaultFilename = path.join(__dirname, '/src/account.js')
 
   if (args.length === 1) {
     const [ obj ] = args
