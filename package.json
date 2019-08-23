@@ -28,15 +28,15 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
+    "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.4",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.2",
     "codecov": "^3.5.0",
     "eslint": "^5.16.0",
-    "jest": "^24.7.1",
+    "jest": "^24.9.0",
     "prettier": "^1.18.2",
-    "regenerator-runtime": "^0.13.2",
+    "regenerator-runtime": "^0.13.3",
     "rimraf": "^3.0.0"
   },
   "license": "MIT"
