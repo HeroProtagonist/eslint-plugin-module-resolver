@@ -55,7 +55,8 @@ const fetchData = await import('actions/fetchData')
 ```json
 ...
 "module-resolver/use-alias": [<enabled>, {
-  "ignoreDepth": <number>
+  "ignoreDepth": <number>,
+  "extensions": <array>
 }]
 ...
 ```
@@ -69,5 +70,17 @@ With the below `ignoreDepth` set, all of the above patterns causing warnings wou
 ```json
 "module-resolver/use-alias": ["error", {
   "ignoreDepth": 2
+}]
+```
+
+### `extensions`
+
+Array of additional extensions to look for when linting. By default, files without extensions are considered to be `.js`. This expands the resolution for extensionless imports. Possible values are `.ts`, `.tsx`, and `.jsx`.
+
+With the below `extensions` array, TypeScript files will also be resolved.
+
+```json
+"module-resolver/use-alias": ["error", {
+  "extensions": [".ts"]
 }]
 ```
