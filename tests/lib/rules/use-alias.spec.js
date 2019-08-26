@@ -7,7 +7,14 @@ let existsSyncSpy
 let cwdSpy
 
 beforeEach(() => {
-  existsSyncSpy = jest.spyOn(fs, 'existsSync').mockImplementation(() => true)
+  existsSyncSpy = jest.spyOn(fs, 'existsSync').mockImplementation(
+    file => {
+      if (file.includes('lib/parsers.js') || file.includes('lib/parsers/index.js')) {
+        return false
+      }
+      return true
+    }
+  )
   cwdSpy = jest.spyOn(process, 'cwd').mockImplementation(() => '/project')
 })
 
@@ -25,7 +32,7 @@ const createInvalid = (...args) => {
 
   if (args.length === 1) {
     const [ obj ] = args
-    ;({ code, type, filename, options } = obj)
+    ;({ code, type, filename, options = [] } = obj)
   } else {
     [ code, type, filename ] = args
   }
@@ -97,6 +104,12 @@ ruleTester.run('module-resolver', rule, {
       type: "ImportDeclaration",
       filename: "/project/src/client/main/utils/index.js",
       options: [{ ignoreDepth: 1 }],
+    }),
+    createInvalid({
+      code: "import { parseResponse } from '../../../../lib/parsers'",
+      type: "ImportDeclaration",
+      filename: "/project/src/client/main/utils/index.js",
+      options: [{ extensions: ['.ts'] }],
     }),
   ],
 })

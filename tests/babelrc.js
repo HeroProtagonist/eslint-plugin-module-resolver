@@ -8,6 +8,7 @@ module.exports = {
         alias: {
           action: './actions',
           reducer: './reducers',
+          lib: './lib',
           ClientMain: './src/client/main'
         },
       },
