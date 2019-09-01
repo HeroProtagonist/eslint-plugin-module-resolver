@@ -56,6 +56,7 @@ const fetchData = await import('actions/fetchData')
 ...
 "module-resolver/use-alias": [<enabled>, {
   "ignoreDepth": <number>,
+  "projectRoot": <string>,
   "extensions": <array>
 }]
 ...
@@ -70,6 +71,18 @@ With the below `ignoreDepth` set, all of the above patterns causing warnings wou
 ```json
 "module-resolver/use-alias": ["error", {
   "ignoreDepth": 2
+}]
+```
+
+### `projectRoot`
+
+String representing a path from your workspace directory to your projectRoot directory where the `.babelrc` and `.eslintrc` files exist. By default this option is unused.
+
+This is useful in a monorepo or projects that have these files nested in a subdirectory _(e.g. `<rootDir>/package/project/.eslintrc`)_.
+
+```json
+"module-resolver/use-alias": ["error", {
+  "projectRoot": "/package/project"
 }]
 ```
 
