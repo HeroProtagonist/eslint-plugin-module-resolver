@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 const fs = require('fs')
 const findBabelConfig = require('find-babel-config')
 const { RuleTester } = require('eslint')
@@ -36,7 +37,7 @@ const createInvalid = (...args) => {
   let filename
   let options = []
   let errorMessage
-  
+
   const defaultFilename = `${projectRoot}/src/account.js`
   const defaultErrorMessage = 'Do not use relative path for aliased modules'
 
@@ -104,7 +105,7 @@ describe('with babel config', () => {
         options: [{ projectRoot: "package/one" }],
       }),
     ],
-  
+
     invalid: [
       createInvalid("require('../actions/api')", "CallExpression"),
       createInvalid("require('../reducers/api')", "CallExpression"),

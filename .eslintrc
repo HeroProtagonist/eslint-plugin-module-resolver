@@ -1,0 +1,10 @@
+{
+    "extends": ["standard", "prettier"],
+    "parserOptions": {
+        "ecmaVersion": 8
+    },
+    "env": {
+        "jest": true,
+        "node": true
+    }
+}
