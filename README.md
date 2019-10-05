@@ -27,25 +27,23 @@ Add `module-resolver` to the plugins section of your `.eslintrc` configuration f
 
 ```json
 {
-    "plugins": [
-        "module-resolver"
-    ]
+  "plugins": ["module-resolver"]
 }
 ```
 
-Then configure the rules you want to use under the rules section.
+Then configure the rules you want to use under the rules section of `.eslintrc`.
 
 ```json
 {
-    "rules": {
-        "module-resolver/use-alias": 2
-    }
+  "rules": {
+    "module-resolver/use-alias": 2
+  }
 }
 ```
 
 ## Supported Rules
 
-* [module-resolver/use-alias](docs/rules/use-alias.md) - Warn when aliased paths are using relative paths
+- [module-resolver/use-alias](docs/rules/use-alias.md) - Warn when aliased paths are using relative paths
 
 # License
 
