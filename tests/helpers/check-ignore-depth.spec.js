@@ -21,7 +21,7 @@ describe('checkIgnoreDepth', () => {
 
     const invalid3 = checkIgnoreDepth({
       path: '../www',
-      ignore: '../'
+      ignore: '../',
     })
 
     expect(invalid1).toBe(false)
@@ -31,18 +31,18 @@ describe('checkIgnoreDepth', () => {
 
   it('returns true if the path is at ignoreDepth', () => {
     const result1 = checkIgnoreDepth({
-      ignorePrefix: '../',
-      path: '../routes/index.js'
+      ignoreDepth: 1,
+      path: '../routes/index.js',
     })
 
     const result2 = checkIgnoreDepth({
-      ignorePrefix: '../../',
-      path: '../../routes/index.js'
+      ignoreDepth: 2,
+      path: '../../routes/index.js',
     })
 
     const result3 = checkIgnoreDepth({
-      ignorePrefix: '../../../',
-      path: '../../../routes/index.js'
+      ignoreDepth: 3,
+      path: '../../../routes/index.js',
     })
 
     expect(result1).toBe(true)
@@ -52,18 +52,18 @@ describe('checkIgnoreDepth', () => {
 
   it('returns false if the path is not at ignoreDepth', () => {
     const result1 = checkIgnoreDepth({
-      ignorePrefix: '../',
-      path: '../../routes/index.js'
+      ignoreDepth: 1,
+      path: '../../routes/index.js',
     })
 
     const result2 = checkIgnoreDepth({
-      ignorePrefix: '../../',
-      path: '../../../routes/index.js'
+      ignoreDepth: 2,
+      path: '../../../routes/index.js',
     })
 
     const result3 = checkIgnoreDepth({
-      ignorePrefix: '../../../',
-      path: '../routes/index.js'
+      ignoreDepth: 3,
+      path: '../routes/index.js',
     })
 
     expect(result1).toBe(false)
