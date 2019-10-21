@@ -66,7 +66,7 @@ describe('with babel config', () => {
     findBabelConfig.sync.mockImplementation(() => ({ config: babelConfig }))
   })
 
-  const ruleTester = new RuleTester({ parser: 'babel-eslint' })
+  const ruleTester = new RuleTester({ parser: require.resolve('babel-eslint') })
   ruleTester.run('module-resolver', rule, {
     valid: [
       "require('actions/api')",
@@ -146,7 +146,7 @@ describe('without babel config', () => {
     findBabelConfig.sync.mockImplementation(() => ({ config: {} }))
   })
 
-  const ruleTester = new RuleTester({ parser: 'babel-eslint' })
+  const ruleTester = new RuleTester({ parser: require.resolve('babel-eslint') })
   ruleTester.run('module-resolver', rule, {
     valid: [],
     invalid: [
