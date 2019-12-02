@@ -33,7 +33,7 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.3",
     "codecov": "https://github.com/HeroProtagonist/codecov-node#a715d6d847410c8ee7ab3ae572baebe55ab98c0c",
-    "eslint": "^6.5.1",
+    "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
