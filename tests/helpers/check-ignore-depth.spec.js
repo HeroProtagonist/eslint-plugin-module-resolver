@@ -70,4 +70,35 @@ describe('checkIgnoreDepth', () => {
     expect(result2).toBe(false)
     expect(result3).toBe(false)
   })
+
+  it('returns correct boolean if the path returns a value less than or equal to ignoreDepth', () => {
+    const result1 = checkIgnoreDepth({
+      ignoreDepth: 1,
+      path: '../../routes/index.js',
+      allowDepthMoreOrLessThanEquality: true,
+    })
+
+    const result2 = checkIgnoreDepth({
+      ignoreDepth: 2,
+      path: '../../../routes/index.js',
+      allowDepthMoreOrLessThanEquality: true,
+    })
+
+    const result3 = checkIgnoreDepth({
+      ignoreDepth: 3,
+      path: '../routes/index.js',
+      allowDepthMoreOrLessThanEquality: true,
+    })
+
+    const result4 = checkIgnoreDepth({
+      ignoreDepth: 2,
+      path: '../../routes/index.js',
+      allowDepthMoreOrLessThanEquality: true,
+    })
+
+    expect(result1).toBe(false)
+    expect(result2).toBe(false)
+    expect(result3).toBe(true)
+    expect(result4).toBe(true)
+  })
 })
