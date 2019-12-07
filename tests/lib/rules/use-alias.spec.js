@@ -13,6 +13,7 @@ jest.mock("find-babel-config", () => ({
 const projectRoot = '/project'
 let existsSyncSpy
 let cwdSpy
+let readDirSyncSpy
 
 beforeEach(() => {
   existsSyncSpy = jest.spyOn(fs, 'existsSync').mockImplementation(
@@ -24,11 +25,36 @@ beforeEach(() => {
     }
   )
   cwdSpy = jest.spyOn(process, 'cwd').mockImplementation(() => projectRoot)
+  readDirSyncSpy = jest.spyOn(fs, 'readdirSync').mockImplementation((dirPath) => {
+    if (dirPath === '/project') {
+      return [{
+        name: 'actions',
+        isDirectory: () => true
+      }, {
+        name: 'lib',
+        isDirectory: () => true
+      }, {
+        name: 'reducers',
+        isDirectory: () => true
+      }, {
+        name: 'lib',
+        isDirectory: () => true
+      }, {
+        name: 'src',
+        isDirectory: () => true
+      }, {
+        name: 'root-subdir-default-alias',
+        isDirectory: () => true
+      }]
+    }
+    return []
+  })
 })
 
 afterEach(() => {
   existsSyncSpy.mockRestore()
   cwdSpy.mockRestore()
+  readDirSyncSpy.mockRestore()
 })
 
 const createInvalid = (...args) => {
@@ -42,10 +68,10 @@ const createInvalid = (...args) => {
   const defaultErrorMessage = 'Do not use relative path for aliased modules'
 
   if (args.length === 1) {
-    const [ obj ] = args
-    ;({ code, type, filename, options = [], errorMessage } = obj)
+    const [obj] = args
+      ; ({ code, type, filename, options =[], errorMessage } = obj)
   } else {
-    [ code, type, filename, errorMessage ] = args
+    [code, type, filename, errorMessage] = args
   }
 
   return {
@@ -72,13 +98,17 @@ describe('with babel config', () => {
       "require('actions/api')",
       "require('reducers/api')",
       "require('ClientMain/api')",
+      "require('root-subdir-default-alias/api')",
       "const { api } = require('actions/api')",
       "const { api } = require('reducers/api')",
+      "const { api } = require('root-subdir-default-alias/api')",
       "import('actions/api')",
       "import('reducers/api')",
+      "import('root-subdir-default-alias/api')",
       "import(`${buildPath}/dist`)",
       "import { api } from 'actions/api'",
       "import { api } from 'reducers/api'",
+      "import { api } from 'root-subdir-default-alias/api'",
       "const { api } = dynamic(import('actions/api'))",
       "const { api } = dynamic(import('reducers/api'))",
       "const { server } = require(`${buildPath}/dist`)",
@@ -109,10 +139,13 @@ describe('with babel config', () => {
     invalid: [
       createInvalid("require('../actions/api')", "CallExpression"),
       createInvalid("require('../reducers/api')", "CallExpression"),
+      createInvalid("require('../root-subdir-default-alias/api')", "CallExpression"),
       createInvalid("import('../../actions/api')", "CallExpression", `${projectRoot}/src/client/index.js`),
       createInvalid("import('../../reducers/api')", "CallExpression", `${projectRoot}/src/client/index.js`),
+      createInvalid("import('../../root-subdir-default-alias/api')", "CallExpression", `${projectRoot}/src/client/index.js`),
       createInvalid("const { api } = dynamic(import('../actions/api'))", "CallExpression"),
       createInvalid("import ClientMain from '../../../client/main/components/App'", "ImportDeclaration", `${projectRoot}/src/client/main/utils/index.js`),
+      createInvalid("import { api } from '../root-subdir-default-alias/api'", "ImportDeclaration"),
       createInvalid("const { api } = dynamic(import('../reducers/api'))", "CallExpression"),
       createInvalid({
         code: "const { api } = dynamic(import('../reducers/api'))",
