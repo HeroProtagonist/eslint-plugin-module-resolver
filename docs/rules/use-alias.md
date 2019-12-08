@@ -57,20 +57,33 @@ const fetchData = await import('actions/fetchData')
 "module-resolver/use-alias": [<enabled>, {
   "ignoreDepth": <number>,
   "projectRoot": <string>,
-  "extensions": <array>
+  "extensions": <array>,
+  "allowDepthMoreOrLessThanEquality": <boolean>
 }]
 ...
 ```
 
 ### `ignoreDepth`
 
-Number representing a depth that can be ignored for aliased imports. By default this option is unused.
+Number representing a depth that can be ignored for aliased imports. Performs strict equality by default. If you want to allow depth of exact or lesser number, check `allowDepthMoreOrLessThanEquality`. By default this option is unused.
 
 With the below `ignoreDepth` set, all of the above patterns causing warnings would no longer. The other cases would continue being valid as well.
 
 ```json
 "module-resolver/use-alias": ["error", {
   "ignoreDepth": 2
+}]
+```
+
+### `allowDepthMoreOrLessThanEquality`
+
+Boolean `allowDepthMoreOrLessThanEquality` sets the equality rule for `ignoreDepth`. By default this option is unused (strict equality is performed).
+
+With the below `allowDepthMoreOrLessThanEquality` set to `true`, all the pattern with depth equal or less than the `ignoreDepth` will be allowed.
+
+```json
+"module-resolver/use-alias": ["error", {
+  "allowDepthMoreOrLessThanEquality": false
 }]
 ```
 
