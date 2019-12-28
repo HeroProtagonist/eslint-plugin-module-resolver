@@ -23,6 +23,17 @@
     "clean": "rimraf *.tgz dist",
     "bump": "yarn test && yarn version && yarn build && npm publish"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "dependencies": {
     "find-babel-config": "^1.2.0"
   },
@@ -40,9 +51,10 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^3.0.8",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
     "regenerator-runtime": "^0.13.3",
     "rimraf": "^3.0.0"
   },
