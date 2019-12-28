@@ -9,7 +9,7 @@ module.exports = {
           action: './actions',
           reducer: './reducers',
           lib: './lib',
-          ClientMain: './src/client/main'
+          ClientMain: './src/client/main',
         },
       },
     ],

@@ -21,28 +21,41 @@
     "build": "babel lib --out-dir dist",
     "build:watch": "yarn build --watch",
     "clean": "rimraf *.tgz dist",
-    "bump": "yarn test && yarn version && yarn build && npm publish"
+    "bump": "yarn test && yarn version && yarn build && npm publish",
+    "format": "prettier --write '{lib,tests}/**/*.js'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "find-babel-config": "^1.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.2",
-    "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.3",
     "codecov": "https://github.com/HeroProtagonist/codecov-node#a715d6d847410c8ee7ab3ae572baebe55ab98c0c",
-    "eslint": "^6.5.1",
-    "eslint-config-prettier": "^6.3.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^3.0.8",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
     "regenerator-runtime": "^0.13.3",
     "rimraf": "^3.0.0"
   },
