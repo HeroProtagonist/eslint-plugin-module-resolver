@@ -21,7 +21,8 @@
     "build": "babel lib --out-dir dist",
     "build:watch": "yarn build --watch",
     "clean": "rimraf *.tgz dist",
-    "bump": "yarn test && yarn version && yarn build && npm publish"
+    "bump": "yarn test && yarn version && yarn build && npm publish",
+    "format": "prettier --write '{lib,tests}/**/*.js'"
   },
   "husky": {
     "hooks": {
