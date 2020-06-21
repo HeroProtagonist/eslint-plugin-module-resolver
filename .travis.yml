@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "stable"
 script:
-  - yarn audit
+  - yarn audit --level critical
   - yarn test:coverage
   - codecov
 branches:
