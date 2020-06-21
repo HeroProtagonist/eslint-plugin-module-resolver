@@ -22,7 +22,8 @@
     "build:watch": "yarn build --watch",
     "clean": "rimraf *.tgz dist",
     "bump": "yarn test && yarn version && yarn build && npm publish",
-    "format": "prettier --write '{lib,tests}/**/*.js'"
+    "format": "prettier --write '{lib,tests}/**/*.js'",
+    "prepare": "yarn run build"
   },
   "husky": {
     "hooks": {
