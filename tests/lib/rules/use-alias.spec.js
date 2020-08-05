@@ -1,13 +1,13 @@
 /* eslint-disable no-template-curly-in-string */
 const fs = require('fs')
-const findBabelConfig = require('find-babel-config')
+const babel = require('@babel/core')
 const { RuleTester } = require('eslint')
 
 const rule = require('../../../lib/rules/use-alias')
 const babelConfig = require('../../babelrc')
 
-jest.mock('find-babel-config', () => ({
-  sync: jest.fn(() => ({ config: {} })),
+jest.mock('@babel/core', () => ({
+  loadPartialConfig: jest.fn(() => ({ options: {} })),
 }))
 
 const projectRoot = '/project'
@@ -51,7 +51,7 @@ const createInvalid = ({
 
 describe('with babel config', () => {
   beforeEach(() => {
-    findBabelConfig.sync.mockImplementation(() => ({ config: babelConfig }))
+    babel.loadPartialConfig.mockImplementation(() => ({ options: babelConfig }))
   })
 
   const ruleTester = new RuleTester({
@@ -166,7 +166,7 @@ describe('with babel config', () => {
 
 describe('without babel config', () => {
   beforeEach(() => {
-    findBabelConfig.sync.mockImplementation(() => ({ config: {} }))
+    babel.loadPartialConfig.mockImplementation(() => ({ options: { plugins: [] } }))
   })
 
   const ruleTester = new RuleTester({
