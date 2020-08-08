@@ -23,6 +23,15 @@ jobs:
       - run:
           name: Audit
           command: yarn audit --level critical
+  build:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - setup-node-and-yarn-install-with-cache
+      - run:
+          name: Build
+          command: yarn build
   test:
     executor:
       name: node/default
@@ -31,10 +40,11 @@ jobs:
       - setup-node-and-yarn-install-with-cache
       - run:
           name: Run tests
-          command: yarn test:coverage && codecov
+          command: yarn test:coverage && yarn codecov
 
 workflows:
   run-ci:
     jobs:
       - audit
+      - build
       - test
