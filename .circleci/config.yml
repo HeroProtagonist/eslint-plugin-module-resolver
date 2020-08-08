@@ -1,43 +1,45 @@
-orbs: # declare what orbs we are going to use
-  node: circleci/node@2.0.2 # the node orb provides common node-related configuration
+version: 2.1
 
-version: 2.1 # using 2.1 provides access to orbs and other features
-
-commands:
-  setup-node-and-yarn-install-with-cache:
-    steps:
-      - node/install:
-          install-yarn: true
-          node-version: latest
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-key: yarn.lock
+orbs:
+  node: circleci/node@3.0.0
 
 jobs:
-  audit:
-    executor:
-      name: node/default
+  install:
+    working_directory: ~/eslint-plugin-module-resolver
+    executor: node/default
     steps:
       - checkout
-      - setup-node-and-yarn-install-with-cache
+      - node/install-packages:
+          pkg-manager: yarn
+          app-dir: ~/eslint-plugin-module-resolver
+          cache-path: node_modules
+          # override-ci-command: yarn install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  audit:
+    executor: node/default
+    steps:
+      - checkout
       - run:
-          name: Audit
+          name: Audit NPM packages
           command: yarn audit --level critical
   build:
-    executor:
-      name: node/default
+    docker:
+      - image: cimg/node:current
     steps:
-      - checkout
-      - setup-node-and-yarn-install-with-cache
+      - attach_workspace:
+          at: .
       - run:
-          name: Build
+          name: Build library
           command: yarn build
   test:
-    executor:
-      name: node/default
+    docker:
+      - image: cimg/node:current
     steps:
-      - checkout
-      - setup-node-and-yarn-install-with-cache
+      - attach_workspace:
+          at: .
       - run:
           name: Run tests
           command: yarn test:coverage && yarn codecov
@@ -45,6 +47,11 @@ jobs:
 workflows:
   run-ci:
     jobs:
+      - install
       - audit
-      - build
-      - test
+      - build:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
