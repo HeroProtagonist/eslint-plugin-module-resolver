@@ -1,0 +1,57 @@
+# https://circleci.com/docs/2.0/sample-config/#sample-configuration-with-sequential-workflow
+version: 2.1
+
+orbs:
+  node: circleci/node@3.0.0
+
+jobs:
+  install:
+    working_directory: ~/eslint-plugin-module-resolver
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          app-dir: ~/eslint-plugin-module-resolver
+          cache-path: node_modules
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  audit:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Audit NPM packages
+          command: yarn audit --level critical
+  build:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build library
+          command: yarn build
+  test:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run tests
+          command: yarn test:coverage && yarn codecov
+
+workflows:
+  run-ci:
+    jobs:
+      - install
+      - audit
+      - build:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
