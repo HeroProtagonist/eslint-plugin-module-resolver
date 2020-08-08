@@ -1,10 +1,12 @@
 language: node_js
 node_js:
   - "stable"
-script:
-  - yarn audit --level critical
-  - yarn test:coverage
-  - codecov
+jobs:
+  include:
+    - stage: "Audit packages"
+      script: yarn audit --level critical
+    - stage: Test
+      script: yarn test:coverage && codecov
 branches:
   only:
     - master
