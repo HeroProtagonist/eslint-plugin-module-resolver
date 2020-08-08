@@ -1,3 +1,4 @@
+# https://circleci.com/docs/2.0/sample-config/#sample-configuration-with-sequential-workflow
 version: 2.1
 
 orbs:
@@ -13,7 +14,6 @@ jobs:
           pkg-manager: yarn
           app-dir: ~/eslint-plugin-module-resolver
           cache-path: node_modules
-          # override-ci-command: yarn install
       - persist_to_workspace:
           root: .
           paths:

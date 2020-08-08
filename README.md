@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/eslint-plugin-module-resolver.svg)](https://badge.fury.io/js/eslint-plugin-module-resolver)
 [![npm downloads](https://img.shields.io/npm/dm/eslint-plugin-module-resolver.svg)](https://www.npmjs.com/package/eslint-plugin-module-resolver)
-[![Build Status](https://travis-ci.com/HeroProtagonist/eslint-plugin-module-resolver.svg?branch=master)](https://travis-ci.com/HeroProtagonist/eslint-plugin-module-resolver)
+[![CircleCI](HeroProtagonist/eslint-plugin-module-resolver.svg?style=shield)](https://app.circleci.com/pipelines/github/HeroProtagonist/eslint-plugin-module-resolver)
 [![codecov](https://codecov.io/gh/HeroProtagonist/eslint-plugin-module-resolver/branch/master/graph/badge.svg)](https://codecov.io/gh/HeroProtagonist/eslint-plugin-module-resolver)
 
 Warn when using relative paths to modules aliased using [babel-plugin-module-resolver](https://github.com/tleunen/babel-plugin-module-resolver)
