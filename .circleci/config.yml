@@ -14,7 +14,7 @@ commands:
           cache-key: yarn.lock
 
 jobs:
-  test:
+  audit:
     executor:
       name: node/default
     steps:
@@ -23,6 +23,12 @@ jobs:
       - run:
           name: Audit
           command: yarn audit --level critical
+  test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - setup-node-and-yarn-install-with-cache
       - run:
           name: Run tests
           command: yarn test:coverage && codecov
@@ -30,4 +36,5 @@ jobs:
 workflows:
   run-ci:
     jobs:
+      - audit
       - test
