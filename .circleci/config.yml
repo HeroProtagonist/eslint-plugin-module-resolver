@@ -1,0 +1,33 @@
+orbs: # declare what orbs we are going to use
+  node: circleci/node@2.0.2 # the node orb provides common node-related configuration
+
+version: 2.1 # using 2.1 provides access to orbs and other features
+
+commands:
+  setup-node-and-yarn-install-with-cache:
+    steps:
+      - node/install:
+          install-yarn: true
+          node-version: latest
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: yarn.lock
+
+jobs:
+  test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - setup-node-and-yarn-install-with-cache
+      - run:
+          name: Audit
+          command: yarn audit --level critical
+      - run:
+          name: Run tests
+          command: yarn test:coverage && codecov
+
+workflows:
+  run-ci:
+    jobs:
+      - test
