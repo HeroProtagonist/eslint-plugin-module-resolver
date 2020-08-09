@@ -28,7 +28,7 @@ describe('getProperties', () => {
     expect(result).toEqual({})
   })
 
-  fit('returns first element of options array', () => {
+  it('returns first element of options array', () => {
     const option1 = [{ foo: 'bar', one: 1 }]
     const option2 = [{ foo: 'bar', one: 1, two: 2 }, 'more', 'items']
 

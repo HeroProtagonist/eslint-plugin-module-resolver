@@ -37,7 +37,7 @@ yarn test:coverage
 Run tests on file save:
 
 ```sh
-yarn test:coverage
+yarn test:watch
 ```
 
 ### Building
