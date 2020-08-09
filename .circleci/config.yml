@@ -7,7 +7,9 @@ orbs:
 jobs:
   install:
     working_directory: ~/eslint-plugin-module-resolver
-    executor: node/default
+    executor:
+      name: node/default
+      tag: lts
     steps:
       - checkout
       - node/install-packages:
@@ -19,7 +21,9 @@ jobs:
           paths:
             - .
   audit:
-    executor: node/default
+    executor:
+      name: node/default
+      tag: lts
     steps:
       - checkout
       - run:
@@ -27,7 +31,7 @@ jobs:
           command: yarn audit --level critical
   build:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - attach_workspace:
           at: .
@@ -36,7 +40,7 @@ jobs:
           command: yarn build
   test:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - attach_workspace:
           at: .
