@@ -15,7 +15,7 @@ let existsSyncSpy
 let cwdSpy
 
 beforeEach(() => {
-  existsSyncSpy = jest.spyOn(fs, 'existsSync').mockImplementation(file => {
+  existsSyncSpy = jest.spyOn(fs, 'existsSync').mockImplementation((file) => {
     if (file.includes('lib/parsers.js') || file.includes('lib/parsers/index.js')) {
       return false
     }
@@ -64,7 +64,15 @@ describe('with babel config', () => {
     findBabelConfig.sync.mockImplementation(() => ({ config: babelConfig }))
   })
 
-  const ruleTester = new RuleTester({ parser: require.resolve('babel-eslint') })
+  const ruleTester = new RuleTester({
+    parser: require('@babel/eslint-parser'),
+    plugins: ['@babel'],
+    parserOptions: {
+      ecmaVersion: 2020,
+      sourceType: 'module',
+    },
+  })
+
   ruleTester.run('module-resolver', rule, {
     valid: [
       "require('actions/api')",
@@ -87,7 +95,7 @@ describe('with babel config', () => {
       "const { api } = dynamic(import('./src/client/main'))",
       createInvalid({
         code: "const { api } = dynamic(import('../reducers/api'))",
-        type: 'CallExpression',
+        type: 'ImportExpression',
         options: [{ ignoreDepth: 1 }],
       }),
       createInvalid({
@@ -98,7 +106,7 @@ describe('with babel config', () => {
       }),
       createInvalid({
         code: "import('actions/api')",
-        type: 'ImportDeclaration',
+        type: 'ImportExpression',
         filename: `${projectRoot}/package/one/src/client/main/utils/index.js`,
         options: [{ projectRoot: 'package/one' }],
       }),
@@ -107,29 +115,31 @@ describe('with babel config', () => {
     invalid: [
       createInvalid("require('../actions/api')", 'CallExpression'),
       createInvalid("require('../reducers/api')", 'CallExpression'),
-      createInvalid("import('../../actions/api')", 'CallExpression', `${projectRoot}/src/client/index.js`),
-      createInvalid("import('../../reducers/api')", 'CallExpression', `${projectRoot}/src/client/index.js`),
-      createInvalid("const { api } = dynamic(import('../actions/api'))", 'CallExpression'),
+      createInvalid("import('../../actions/api')", 'ImportExpression', `${projectRoot}/src/client/index.js`),
+      createInvalid("import('../../reducers/api')", 'ImportExpression', `${projectRoot}/src/client/index.js`),
+      createInvalid("const { api } = dynamic(import('../actions/api'))", 'ImportExpression'),
       createInvalid(
         "import ClientMain from '../../../client/main/components/App'",
         'ImportDeclaration',
         `${projectRoot}/src/client/main/utils/index.js`,
       ),
-      createInvalid("const { api } = dynamic(import('../reducers/api'))", 'CallExpression'),
+      createInvalid("const { api } = dynamic(import('../reducers/api'))", 'ImportExpression'),
       createInvalid({
         code: "const { api } = dynamic(import('../reducers/api'))",
-        type: 'CallExpression',
+        type: 'ImportExpression',
         options: [{ ignoreDepth: 2 }],
+        output: "const { api } = dynamic(import('reducers/api'))",
       }),
       createInvalid({
         code: "import ClientMain from '../../../client/main/components/App'",
         type: 'ImportDeclaration',
         filename: `${projectRoot}/src/client/main/utils/index.js`,
         options: [{ ignoreDepth: 1 }],
+        output: "import ClientMain from 'ClientMain/components/App'",
       }),
       createInvalid({
         code: "import('actions/api')",
-        type: 'CallExpression',
+        type: 'ImportExpression',
         filename: `${projectRoot}/package/one/src/client/main/utils/index.js`,
         options: [{ projectRoot: 'invalid/project' }],
       }),
@@ -148,7 +158,14 @@ describe('without babel config', () => {
     findBabelConfig.sync.mockImplementation(() => ({ config: {} }))
   })
 
-  const ruleTester = new RuleTester({ parser: require.resolve('babel-eslint') })
+  const ruleTester = new RuleTester({
+    parser: require('@babel/eslint-parser'),
+    plugins: ['@babel'],
+    parserOptions: {
+      ecmaVersion: 2020,
+      sourceType: 'module',
+    },
+  })
   ruleTester.run('module-resolver', rule, {
     valid: [],
     invalid: [
