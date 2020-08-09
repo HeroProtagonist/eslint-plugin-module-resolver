@@ -35,17 +35,17 @@ const createInvalid = (...args) => {
   let filename
   let options = []
   let errorMessage
+  let output
 
   const defaultFilename = `${projectRoot}/src/account.js`
   const defaultErrorMessage = 'Do not use relative path for aliased modules'
 
   if (args.length === 1) {
     const [obj] = args
-    ;({ code, type, filename, options = [], errorMessage } = obj)
+    ;({ code, type, filename, options = [], errorMessage, output } = obj)
   } else {
-    ;[code, type, filename, errorMessage] = args
+    ;[code, type, filename, errorMessage, output] = args
   }
-
   return {
     code,
     filename: filename || defaultFilename,
@@ -56,6 +56,7 @@ const createInvalid = (...args) => {
         type,
       },
     ],
+    output,
   }
 }
 
