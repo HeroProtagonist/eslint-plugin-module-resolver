@@ -29,35 +29,25 @@ afterEach(() => {
   cwdSpy.mockRestore()
 })
 
-const createInvalid = (...args) => {
-  let code
-  let type
-  let filename
-  let options = []
-  let errorMessage
-
-  const defaultFilename = `${projectRoot}/src/account.js`
-  const defaultErrorMessage = 'Do not use relative path for aliased modules'
-
-  if (args.length === 1) {
-    const [obj] = args
-    ;({ code, type, filename, options = [], errorMessage } = obj)
-  } else {
-    ;[code, type, filename, errorMessage] = args
-  }
-
-  return {
-    code,
-    filename: filename || defaultFilename,
-    options: options || [],
-    errors: [
-      {
-        message: errorMessage || defaultErrorMessage,
-        type,
-      },
-    ],
-  }
-}
+const createInvalid = ({
+  code,
+  type,
+  filename = `${projectRoot}/src/account.js`,
+  options = [],
+  errorMessage = 'Do not use relative path for aliased modules',
+  output = null,
+}) => ({
+  code,
+  filename,
+  options,
+  errors: [
+    {
+      message: errorMessage,
+      type,
+    },
+  ],
+  output,
+})
 
 describe('with babel config', () => {
   beforeEach(() => {
@@ -113,17 +103,36 @@ describe('with babel config', () => {
     ],
 
     invalid: [
-      createInvalid("require('../actions/api')", 'CallExpression'),
-      createInvalid("require('../reducers/api')", 'CallExpression'),
-      createInvalid("import('../../actions/api')", 'ImportExpression', `${projectRoot}/src/client/index.js`),
-      createInvalid("import('../../reducers/api')", 'ImportExpression', `${projectRoot}/src/client/index.js`),
-      createInvalid("const { api } = dynamic(import('../actions/api'))", 'ImportExpression'),
-      createInvalid(
-        "import ClientMain from '../../../client/main/components/App'",
-        'ImportDeclaration',
-        `${projectRoot}/src/client/main/utils/index.js`,
-      ),
-      createInvalid("const { api } = dynamic(import('../reducers/api'))", 'ImportExpression'),
+      createInvalid({ code: "require('../actions/api')", type: 'CallExpression', output: "require('actions/api')" }),
+      createInvalid({ code: "require('../reducers/api')", type: 'CallExpression', output: "require('reducers/api')" }),
+      createInvalid({
+        code: "import('../../actions/api')",
+        type: 'ImportExpression',
+        filename: `${projectRoot}/src/client/index.js`,
+        output: "import('actions/api')",
+      }),
+      createInvalid({
+        code: "import('../../reducers/api')",
+        type: 'ImportExpression',
+        filename: `${projectRoot}/src/client/index.js`,
+        output: "import('reducers/api')",
+      }),
+      createInvalid({
+        code: "const { api } = dynamic(import('../actions/api'))",
+        type: 'ImportExpression',
+        output: "const { api } = dynamic(import('actions/api'))",
+      }),
+      createInvalid({
+        code: "import ClientMain from '../../../client/main/components/App'",
+        type: 'ImportDeclaration',
+        filename: `${projectRoot}/src/client/main/utils/index.js`,
+        output: "import ClientMain from 'ClientMain/components/App'",
+      }),
+      createInvalid({
+        code: "const { api } = dynamic(import('../reducers/api'))",
+        type: 'ImportExpression',
+        output: "const { api } = dynamic(import('reducers/api'))",
+      }),
       createInvalid({
         code: "const { api } = dynamic(import('../reducers/api'))",
         type: 'ImportExpression',
@@ -142,12 +151,14 @@ describe('with babel config', () => {
         type: 'ImportExpression',
         filename: `${projectRoot}/package/one/src/client/main/utils/index.js`,
         options: [{ projectRoot: 'invalid/project' }],
+        errorMessage: 'Invalid project root specified',
       }),
       createInvalid({
         code: "import { parseResponse } from '../../../../lib/parsers'",
         type: 'ImportDeclaration',
         filename: `${projectRoot}/src/client/main/utils/index.js`,
-        options: [{ extensions: ['.ts'] }],
+        output: "import { parseResponse } from 'lib/parsers'",
+        options: [{ extensions: ['.ts'] }], // check it honor extension option
       }),
     ],
   })
