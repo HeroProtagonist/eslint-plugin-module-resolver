@@ -6,9 +6,7 @@ const { RuleTester } = require('eslint')
 const rule = require('../../../lib/rules/use-alias')
 const babelConfig = require('../../babelrc')
 
-jest.mock('@babel/core', () => ({
-  loadPartialConfig: jest.fn(() => ({ options: {} })),
-}))
+jest.mock('@babel/core')
 
 const projectRoot = '/project'
 let existsSyncSpy
