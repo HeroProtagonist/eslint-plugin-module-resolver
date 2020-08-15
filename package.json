@@ -37,9 +37,6 @@
       "git add"
     ]
   },
-  "dependencies": {
-    "find-babel-config": "^1.2.0"
-  },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
