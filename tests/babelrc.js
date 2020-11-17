@@ -1,9 +1,11 @@
 module.exports = {
-  presets: ['env'],
+  presets: [],
   plugins: [
-    [
-      'babel-plugin-module-resolver',
-      {
+    {
+      file: {
+        request: 'babel-plugin-module-resolver'
+      },
+      options: {
         root: ['.'],
         alias: {
           actions: './actions',
@@ -11,7 +13,7 @@ module.exports = {
           lib: './lib',
           ClientMain: './src/client/main',
         },
-      },
-    ],
-  ],
+      }
+    }
+  ]
 }
