@@ -63,18 +63,17 @@ describe('with babel config', () => {
 
   ruleTester.run('module-resolver', rule, {
     valid: [
-      "require('actions/api')",
-      "require('reducers/api')",
-      "require('ClientMain/api')",
-      "const { api } = require('actions/api')",
-      "const { api } = require('reducers/api')",
-      "import('actions/api')",
-      "import('reducers/api')",
+      { code: "require('actions/api')", filename: `${projectRoot}/src/index.js` },
+      { code: "require('reducers/api')", filename: `${projectRoot}/src/index.js` },
+      { code: "const { api } = require('actions/api')", filename: `${projectRoot}/src/index.js` },
+      { code: "const { api } = require('reducers/api')", filename: `${projectRoot}/src/index.js` },
+      { code: "import('actions/api')", filename: `${projectRoot}/src/index.js` },
+      { code: "import('reducers/api')", filename: `${projectRoot}/src/index.js` },
       'import(`${buildPath}/dist`)',
-      "import { api } from 'actions/api'",
-      "import { api } from 'reducers/api'",
-      "const { api } = dynamic(import('actions/api'))",
-      "const { api } = dynamic(import('reducers/api'))",
+      { code: "import { api } from 'actions/api'", filename: `${projectRoot}/src/index.js` },
+      { code: "import { api } from 'reducers/api'", filename: `${projectRoot}/src/index.js` },
+      { code: "const { api } = dynamic(import('actions/api'))", filename: `${projectRoot}/src/index.js` },
+      { code: "const { api } = dynamic(import('reducers/api'))", filename: `${projectRoot}/src/index.js` },
       'const { server } = require(`${buildPath}/dist`)',
       "const { api } = require('./actions/api')",
       "const { api } = require('./reducers/api')",
@@ -101,12 +100,20 @@ describe('with babel config', () => {
     ],
 
     invalid: [
-      createInvalid({ code: "require('../actions/api')", type: 'CallExpression', output: "require('actions/api')" }),
-      createInvalid({ code: "require('../reducers/api')", type: 'CallExpression', output: "require('reducers/api')" }),
+      createInvalid({
+        code: "require('../actions/api')",
+        type: 'CallExpression',
+        output: "require('actions/api')",
+      }),
+      createInvalid({
+        code: "require('../reducers/api')",
+        type: 'CallExpression',
+        output: "require('reducers/api')",
+      }),
       createInvalid({
         code: "import('../../actions/api')",
-        type: 'ImportExpression',
         filename: `${projectRoot}/src/client/index.js`,
+        type: 'ImportExpression',
         output: "import('actions/api')",
       }),
       createInvalid({
@@ -114,6 +121,25 @@ describe('with babel config', () => {
         type: 'ImportExpression',
         filename: `${projectRoot}/src/client/index.js`,
         output: "import('reducers/api')",
+      }),
+      createInvalid({
+        code: "import('./../actions/api')",
+        type: 'ImportExpression',
+        output: "import('actions/api')",
+      }),
+      createInvalid({
+        code: "import 'actions/api'",
+        filename: `${projectRoot}/index.js`,
+        type: 'ImportDeclaration',
+        output: "import './actions/api'",
+        errorMessage: 'Do not use aliased path for subpath import',
+      }),
+      createInvalid({
+        code: "import 'actions/api'",
+        filename: `${projectRoot}/actions/index.js`,
+        type: 'ImportDeclaration',
+        output: "import './api'",
+        errorMessage: 'Do not use aliased path for subpath import',
       }),
       createInvalid({
         code: "const { api } = dynamic(import('../actions/api'))",

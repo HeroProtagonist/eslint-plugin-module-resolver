@@ -59,5 +59,8 @@
     "regenerator-runtime": "^0.13.3",
     "rimraf": "^3.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-module-resolver": "^4.1.0"
+  }
 }
