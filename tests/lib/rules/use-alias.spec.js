@@ -135,6 +135,13 @@ describe('with babel config', () => {
         errorMessage: 'Do not use aliased path for subpath import',
       }),
       createInvalid({
+        code: "import 'actions/api'",
+        filename: `${projectRoot}/actions/index.js`,
+        type: 'ImportDeclaration',
+        output: "import './api'",
+        errorMessage: 'Do not use aliased path for subpath import',
+      }),
+      createInvalid({
         code: "const { api } = dynamic(import('../actions/api'))",
         type: 'ImportExpression',
         output: "const { api } = dynamic(import('actions/api'))",
