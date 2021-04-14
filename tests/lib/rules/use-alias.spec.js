@@ -123,6 +123,11 @@ describe('with babel config', () => {
         output: "import('reducers/api')",
       }),
       createInvalid({
+        code: "import('./../actions/api')",
+        type: 'ImportExpression',
+        output: "import('actions/api')",
+      }),
+      createInvalid({
         code: "import 'actions/api'",
         filename: `${projectRoot}/index.js`,
         type: 'ImportDeclaration',
