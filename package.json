@@ -26,11 +26,6 @@
     "format": "prettier --write '{lib,tests}/**/*.js'",
     "prepare": "yarn run build && husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn test && lint-staged"
-    }
-  },
   "lint-staged": {
     "*.js": [
       "prettier --write",
