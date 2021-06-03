@@ -81,6 +81,12 @@ describe('with babel config', () => {
       "import { api } from './reducers/api'",
       "import { api } from './reducers/api'",
       "const { api } = dynamic(import('./src/client/main'))",
+      // Check for shared prefix collision with /lib alias
+      createInvalid({
+        code: "import Maintain from '../../../client/maintain'",
+        type: 'ImportDeclaration',
+        filename: `${projectRoot}/src/client/main/utils/index.js`,
+      }),
       createInvalid({
         code: "const { api } = dynamic(import('../reducers/api'))",
         type: 'ImportExpression',
