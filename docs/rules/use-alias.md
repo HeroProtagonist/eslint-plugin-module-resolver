@@ -58,7 +58,8 @@ const fetchData = await import('actions/fetchData')
   "ignoreDepth": <number>,
   "projectRoot": <string>,
   "extensions": <array>,
-  "allowDepthMoreOrLessThanEquality": <boolean>
+  "allowDepthMoreOrLessThanEquality": <boolean>,
+  "alias": <object>
 }]
 ...
 ```
@@ -108,5 +109,23 @@ With the below `extensions` array, TypeScript files will also be resolved.
 ```json
 "module-resolver/use-alias": ["error", {
   "extensions": [".ts"]
+}]
+```
+
+### `alias`
+
+Object that represents projects alias mappings. This is used to pass the alias directly in and prevent searching for it within a `.babelrc` file. By default, this is unused and the alias is looked for within a `.babelrc` file. See [#172](https://github.com/HeroProtagonist/eslint-plugin-module-resolver/pull/172) for motivation.
+
+The alias object below will be used even if the project has a `.babelrc` file.
+
+```json
+"module-resolver/use-alias": ["error", {
+  "alias": {
+    "root": ["."],
+    "alias": {
+      "#foo": "./src/foo",
+      "#bar": "./bar",
+    }
+  }
 }]
 ```
