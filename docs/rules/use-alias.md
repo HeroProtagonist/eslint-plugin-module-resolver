@@ -58,6 +58,7 @@ const fetchData = await import('actions/fetchData')
   "ignoreDepth": <number>,
   "projectRoot": <string>,
   "extensions": <array>,
+  "chainedExtensions": <array>,
   "allowDepthMoreOrLessThanEquality": <boolean>,
   "alias": <object>
 }]
@@ -109,6 +110,18 @@ With the below `extensions` array, TypeScript files will also be resolved.
 ```json
 "module-resolver/use-alias": ["error", {
   "extensions": [".ts"]
+}]
+```
+
+### `chainedExtensions`
+
+Array of extensions to check for chaining. For example, React projects use `.jss.js` files to generate CSS styles for components. By default, files with extensions are considered to have only those extensions, while files without default to `.js` (and anything included in `extensions` as described above. This expands the resolution for imports with chained extensions. Any string value is supported.
+
+With the below `chainedExtensions` array, JSS files will also be resolved.
+
+```json
+"module-resolver/use-alias": ["error", {
+  "chainedExtensions": [".jss"]
 }]
 ```
 
