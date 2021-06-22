@@ -17,6 +17,10 @@ beforeEach(() => {
     if (file.includes('lib/parsers.js') || file.includes('lib/parsers/index.js')) {
       return false
     }
+    // Assume only .js and .ts files exist
+    if (!file.endsWith('.js') && !file.endsWith('.ts')) {
+      return false
+    }
     return true
   })
   cwdSpy = jest.spyOn(process, 'cwd').mockImplementation(() => projectRoot)
@@ -80,7 +84,15 @@ describe('with babel config', () => {
       "const { api } = require('./reducers/api')",
       "import { api } from './reducers/api'",
       "import { api } from './reducers/api'",
+      // Valid unless ".css" is in `chainedExtensions`
+      "import { CSS } from '../../../client/shared.css'",
       "const { api } = dynamic(import('./src/client/main'))",
+      // Check for shared prefix collision with /lib alias
+      createInvalid({
+        code: "import Maintain from '../../../client/maintain'",
+        type: 'ImportDeclaration',
+        filename: `${projectRoot}/src/client/main/utils/index.js`,
+      }),
       createInvalid({
         code: "const { api } = dynamic(import('../reducers/api'))",
         type: 'ImportExpression',
@@ -157,6 +169,13 @@ describe('with babel config', () => {
         filename: `${projectRoot}/src/client/main/utils/index.js`,
         output: "import { parseResponse } from 'lib/parsers'",
         options: [{ extensions: ['.ts'] }], // check it honor extension option
+      }),
+      createInvalid({
+        code: "import { CSS } from '../../../../lib/shared.css'",
+        type: 'ImportDeclaration',
+        filename: `${projectRoot}/src/client/main/utils/index.js`,
+        output: "import { CSS } from 'lib/shared.css'",
+        options: [{ chainedExtensions: ['.css'] }],
       }),
     ],
   })

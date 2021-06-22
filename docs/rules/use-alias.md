@@ -58,7 +58,9 @@ const fetchData = await import('actions/fetchData')
   "ignoreDepth": <number>,
   "projectRoot": <string>,
   "extensions": <array>,
-  "allowDepthMoreOrLessThanEquality": <boolean>
+  "chainedExtensions": <array>,
+  "allowDepthMoreOrLessThanEquality": <boolean>,
+  "alias": <object>
 }]
 ...
 ```
@@ -108,5 +110,35 @@ With the below `extensions` array, TypeScript files will also be resolved.
 ```json
 "module-resolver/use-alias": ["error", {
   "extensions": [".ts"]
+}]
+```
+
+### `chainedExtensions`
+
+Array of extensions to check for chaining. For example, React projects use `.jss.js` files to generate CSS styles for components. By default, files with extensions are considered to have only those extensions, while files without default to `.js` (and anything included in `extensions` as described above. This expands the resolution for imports with chained extensions. Any string value is supported.
+
+With the below `chainedExtensions` array, JSS files will also be resolved.
+
+```json
+"module-resolver/use-alias": ["error", {
+  "chainedExtensions": [".jss"]
+}]
+```
+
+### `alias`
+
+Object that represents projects alias mappings. This is used to pass the alias directly in and prevent searching for it within a `.babelrc` file. By default, this is unused and the alias is looked for within a `.babelrc` file. See [#172](https://github.com/HeroProtagonist/eslint-plugin-module-resolver/pull/172) for motivation.
+
+The alias object below will be used even if the project has a `.babelrc` file.
+
+```json
+"module-resolver/use-alias": ["error", {
+  "alias": {
+    "root": ["."],
+    "alias": {
+      "#foo": "./src/foo",
+      "#bar": "./bar",
+    }
+  }
 }]
 ```
