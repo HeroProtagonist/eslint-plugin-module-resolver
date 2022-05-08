@@ -1,49 +1,57 @@
 # https://circleci.com/docs/2.0/sample-config/#sample-configuration-with-sequential-workflow
 version: 2.1
 
+executors:
+  node:
+    docker:
+      - image: cimg/node:lts
+  linux:
+    docker:
+      - image: cimg/base:2020.01
+  macos:
+    macos:
+      xcode: 12.5.1
+  windows:
+    machine:
+      image: windows-server-2019-vs2019:stable
+      shell: bash.exe
+    resource_class: windows.medium
+
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@5.0.2
 
 jobs:
-  install:
-    working_directory: ~/eslint-plugin-module-resolver
-    executor:
-      name: node/default
-      tag: lts
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-          app-dir: ~/eslint-plugin-module-resolver
-          cache-path: node_modules
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
   audit:
-    executor:
-      name: node/default
-      tag: lts
+    executor: node
     steps:
       - checkout
       - run:
           name: Audit NPM packages
           command: yarn audit --level critical
   build:
-    docker:
-      - image: cimg/node:lts
+    executor: node
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
           name: Build library
           command: yarn build
   test:
-    docker:
-      - image: cimg/node:lts
+    parameters:
+      os:
+        type: executor
+      node-version:
+        type: string
+    executor: << parameters.os >>
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
+      - node/install:
+          node-version: << parameters.node-version >>
+          install-yarn: true
+      - run:
+          name: Install packages
+          command: yarn install
       - run:
           name: Run tests
           command: yarn test:coverage && yarn codecov
@@ -51,11 +59,10 @@ jobs:
 workflows:
   run-ci:
     jobs:
-      - install
       - audit
-      - build:
-          requires:
-            - install
+      - build
       - test:
-          requires:
-            - install
+          matrix:
+            parameters:
+              os: [linux, macos, windows]
+              node-version: ["16.14.2"]
