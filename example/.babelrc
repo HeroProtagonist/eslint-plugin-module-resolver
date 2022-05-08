@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    ["module-resolver", {
+      "root": ["."],
+      "alias": {
+        "lib": "./lib",
+        "config": "./config",
+        "components": "./src/components"
+      }
+    }]
+  ]
+}
