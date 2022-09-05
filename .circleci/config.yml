@@ -1,4 +1,5 @@
 # https://circleci.com/docs/2.0/sample-config/#sample-configuration-with-sequential-workflow
+# https://circleci.com/blog/circleci-matrix-jobs
 version: 2.1
 
 executors:
