@@ -63,3 +63,5 @@ typings/
 .next
 
 dist
+
+.yarn/install-state.gz

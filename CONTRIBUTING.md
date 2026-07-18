@@ -8,7 +8,11 @@ Contributions are welcome! See something that could be improved, feel free to cr
 
 - [AST Explore](https://astexplorer.net) - Tool to visualize [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree). Can create and test ESLint rules in the browser
 
-- [Yeoman generator-eslint](https://github.com/eslint/generator-eslint) - Yeoman template for ESLint rules. Was used to bootstrap this repository
+- [Yeoman generator-eslint](https://github.com/eslint/generator-eslint) - Yeoman template for ESLint rules was used to bootstrap this repository
+
+## Tool Versions
+
+[Mise](https://mise.jdx.dev/) is used to manage node and yarn versions for this package. Follow the getting started [docs](https://mise.jdx.dev/getting-started.html).
 
 ## Development
 
@@ -17,6 +21,8 @@ Fork and clone the repo
 ```sh
 git clone https://github.com/{username}/eslint-plugin-module-resolver
 cd eslint-plugin-module-resolver
+
+mise install
 yarn
 ```
 
@@ -71,6 +77,6 @@ yarn link "eslint-plugin-module-resolver"
 ## Opening a pull request
 
 - Fork the repo
-- Branch off master
+- Branch off main
 - Make sure all tests pass and create new ones if needed
 - Reference any open issues that relate to the PR in the description
