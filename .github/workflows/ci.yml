@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-   branches: [main]
+    branches: [main]
   pull_request:
 
 jobs:
@@ -11,10 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - run: corepack enable
       - uses: actions/setup-node@v7
         with:
           node-version: lts/*
-      - run: corepack enable
+          cache: yarn
+      - run: yarn install
       - run: yarn audit --severity critical
 
   build:
@@ -22,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - run: corepack enable
       - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           cache: yarn
-      - run: corepack enable
       - run: yarn install
       - run: yarn build
 
@@ -40,11 +42,11 @@ jobs:
         node-version: ['16.9']
     steps:
       - uses: actions/checkout@v6
+      - run: corepack enable
       - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
           cache: yarn
-      - run: corepack enable
       - run: yarn install
       - run: yarn test:coverage
       - run: yarn codecov
