@@ -17,7 +17,7 @@ jobs:
           node-version: lts/*
           cache: yarn
       - run: yarn install
-      - run: yarn audit --severity critical
+      - run: yarn npm audit --severity critical
 
   build:
     name: Build library
@@ -39,7 +39,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        node-version: ['16.9']
+        node-version: ['22', '24']
     steps:
       - uses: actions/checkout@v6
       - run: corepack enable
