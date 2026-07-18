@@ -3,6 +3,7 @@
   "version": "1.5.0",
   "description": "Warn when using relative paths to modules aliased",
   "repository": "HeroProtagonist/eslint-plugin-module-resolver",
+  "packageManager": "yarn@4.17.1",
   "devEngines": {
     "runtime": {
       "name": "node",
