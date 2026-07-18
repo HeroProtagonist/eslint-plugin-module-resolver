@@ -3,7 +3,7 @@ module.exports = {
   plugins: [
     {
       file: {
-        request: 'babel-plugin-module-resolver'
+        request: 'babel-plugin-module-resolver',
       },
       options: {
         root: ['.'],
@@ -13,7 +13,7 @@ module.exports = {
           lib: './lib',
           ClientMain: './src/client/main',
         },
-      }
-    }
-  ]
+      },
+    },
+  ],
 }
